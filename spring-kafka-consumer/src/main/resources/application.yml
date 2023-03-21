@@ -22,16 +22,12 @@ spring:
     properties:
       schema.registry.url: http://localhost:8081
 
+  sleuth:
+    sampler:
+      probability: 1.0
+
 # Open up all Spring Boot Actuator endpoints
 management:
-  zipkin:
-    tracing:
-      endpoint: http://localhost:9411/api/v2/spans
-
-  tracing:
-      sampling:
-        probability: 1.0
-
   endpoints:
     web:
       exposure:
@@ -45,12 +41,3 @@ management:
     tags:
       application: ${spring.application.name}
       env: local
-
-
-logging:
-  level:
-    root: info
-    io.opentelemetry.exporter.zipkin: debug
-    io.zipkin: debug
-
-logging.pattern.level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"

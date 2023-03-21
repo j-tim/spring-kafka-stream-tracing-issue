@@ -14,7 +14,7 @@ public class StockQuoteConsumer {
     public final static String STOCK_QUOTES_TOPIC_NAME = "stock-quotes";
 
     @KafkaListener(topics = {"stock-quotes-exchange-nyse", "stock-quotes-exchange-nasdaq", "stock-quotes-exchange-ams"})
-    public void on(StockQuote stockQuote, @Header(KafkaHeaders.RECEIVED_PARTITION) String partition) {
+    public void on(StockQuote stockQuote, @Header(KafkaHeaders.RECEIVED_PARTITION_ID) String partition) {
         log.info("Consumed from partition: {} value: {}", partition, stockQuote);
     }
 }

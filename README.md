@@ -24,7 +24,7 @@ But for Kafka streams application (using the `KafkaStreamBrancher` see [KafkaStr
 
 * `main`: 
   * Spring Boot 3.0.4
-  * Spring Cloud: 2022.0.1
+  * Spring Cloud: 2021.0.6
   * Spring for Apache Kafka: 
   * Micrometer Tracing (Open Telemetry + Zipkin)
 * `spring-boot-2.7-spring-cloud-sleuth`: 
