@@ -15,13 +15,25 @@ Distributed tracing works fine for:
 
 But for Kafka streams application (using the `KafkaStreamBrancher` see [KafkaStreamsConfig.java](spring-kafka-streams/src/main/java/nl/jtim/kafka/streams/config/KafkaStreamsConfig.java)) the tracing is no longer working after the upgrade.
 
-|                                               | Tracing producer working? | Tracing consumer working? | Tracing Kafka Streams working? | Dependencies shown in Zipkin? |
-|-----------------------------------------------|---------------------------|---------------------------|--------------------------------|-------------------------------|
-| Spring Boot 2.7.x + Spring Cloud Sleuth       | Y                         | Y                         | Y                              | Y                             |
-| Spring Boot 3.0.x + Micrometer Tracing (OTEL) | Y                         | Y                         | N                              | N                             |
+|                                                       | Tracing producer working? | Tracing consumer working? | Tracing Kafka Streams working? | Dependencies shown in Zipkin?     |
+|-------------------------------------------------------|---------------------------|---------------------------|--------------------------------|-----------------------------------|
+| Spring Boot 2.7.x + Spring Cloud Sleuth               | Y                         | Y                         | Y                              | Y                                 |
+| Spring Boot 3.0.x + Micrometer Tracing (Bridge OTEL)  | Y                         | Y                         | N                              | N                                 |
+| Spring Boot 3.0.x + Micrometer Tracing (Bridge Brave) | Y                         | Y                         | N                              | Y (execpt for stream application) |
+
 
 Did I overlook something in the documentation to enable tracing for my Kafka Streams application?
 Or is tracing for Kafka Stream applications not supported yet using Spring for Apache Kafka and Micrometer Tracing?
+
+**Spring Boot 2 + Spring Cloud Sleuth:**
+
+![](images/spring-boot-2-zipkin-traces-overview.png)
+
+
+**Spring Boot 3 + Micrometer Tracing (Open Telemetry):**
+
+![](images/spring-boot-3-zipkin-traces-overview.png)
+
 
 ## Branches
 
