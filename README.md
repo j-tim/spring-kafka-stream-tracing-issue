@@ -4,7 +4,7 @@
 
 At the moment I'm migrating some Spring Boot 2.7.x, Spring for Apache Kafka applications to Spring Boot 3.
 
-I followed the migration guide and Spring Kafka documentation regarding Spring Cloud Sleuth and Micrometer Tracing 
+I followed the migration guide and Spring Kafka documentation regarding migrating from Spring Cloud Sleuth to Micrometer Tracing 
 * https://docs.spring.io/spring-kafka/reference/html/#observation-gen
 * https://github.com/spring-cloud/spring-cloud-release/wiki/Spring-Cloud-2022.0-Release-Notes
 * https://github.com/micrometer-metrics/tracing/wiki/Spring-Cloud-Sleuth-3.1-Migration-Guide
@@ -20,12 +20,15 @@ But for Kafka streams application (using the `KafkaStreamBrancher` see [KafkaStr
 | Spring Boot 2.7.x + Spring Cloud Sleuth       | Y                         | Y                         | Y                              | Y                             |
 | Spring Boot 3.0.x + Micrometer Tracing (OTEL) | Y                         | Y                         | N                              | N                             |
 
+Did I overlook something in the documentation to enable tracing for my Kafka Streams application?
+Or is tracing for Kafka Stream applications not supported yet using Spring for Apache Kafka and Micrometer Tracing?
+
 ## Branches
 
 * `main`: 
   * Spring Boot 3.0.4
   * Spring Cloud: 2022.0.1
-  * Spring for Apache Kafka: 
+  * Spring for Apache Kafka: 3.0.4
   * Micrometer Tracing (Open Telemetry + Zipkin)
 * `spring-boot-2.7-spring-cloud-sleuth`: 
   * Spring Boot 2.7.9
@@ -103,3 +106,18 @@ Also, the dependency view is empty
 [Zipkin Dependencies view](http://localhost:9411/zipkin/dependency)
 
 ![](images/spring-boot-3-zipkin-traces-dependencies-empty.png)
+
+## Working traces for Kafka Streams using Spring Boot 2.7.x and Spring Cloud Sleuth
+
+When running the same application from branch: `spring-boot-2.7-spring-cloud-sleuth`:
+
+Traces from the Kafka Streams application are there:
+
+![](images/spring-boot-2-zipkin-traces-overview.png)
+
+![](images/spring-boot-2-zipkin-traces-details.png)
+
+The dependency view shows all the applications including the Kafka cluster:
+
+![](images/spring-boot-2-zipkin-traces-dependencies-shown.png)
+
