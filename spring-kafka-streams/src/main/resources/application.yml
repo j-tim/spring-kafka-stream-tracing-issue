@@ -1,0 +1,55 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: streams-application
+
+  kafka:
+    bootstrap-servers: localhost:9092
+
+    producer:
+      # Important!
+      # In case you publish to a 'dead letter topic' your application becomes
+      # a producer as well! So you need to specify the producer properties!
+      key-serializer: org.apache.kafka.common.serialization.ByteArraySerializer
+      value-serializer: org.apache.kafka.common.serialization.ByteArraySerializer
+
+    streams:
+      application-id: ${spring.application.name}
+      bootstrap-servers: ${spring.kafka.bootstrap-servers}
+      # This setting is here to don't wait until the buffer is full
+      cache-max-size-buffering: 0
+      properties:
+        schema.registry.url: http://localhost:8081
+        default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+        default.value.serde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+        # LogAndFailExceptionHandler is the default!
+        default.deserialization.exception.handler: org.apache.kafka.streams.errors.LogAndFailExceptionHandler
+#        default.deserialization.exception.handler: org.apache.kafka.streams.errors.LogAndContinueExceptionHandler
+#        default.deserialization.exception.handler: org.springframework.kafka.streams.RecoveringDeserializationExceptionHandler
+
+# Open up all Spring Boot Actuator endpoints
+management:
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
+
+  tracing:
+    sampling:
+      probability: 1.0
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+  endpoint:
+    health:
+      show-details: always
+
+logging.pattern.level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+
+logging:
+  level:
+    io.opentelemetry.exporter.zipkin: debug
+    io.zipkin: debug

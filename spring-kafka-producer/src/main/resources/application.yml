@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: producer-application
+
+  kafka:
+    bootstrap-servers: localhost:9092
+
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+      client-id: ${spring.application.name}
+      properties:
+        enable.idempotence: true
+
+    properties:
+      schema.registry.url: http://localhost:8081
+
+# Open up all Spring Boot Actuator endpoints
+management:
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
+
+  tracing:
+    enabled: true
+    sampling:
+      probability: 1.0
+
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+  endpoint:
+    health:
+      show-details: always
+
+  metrics:
+    tags:
+      application: ${spring.application.name}
+      env: local
+
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+
+  level:
+    root: info
+    io.opentelemetry.exporter.zipkin: debug
+    io.zipkin: debug
+
+

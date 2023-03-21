@@ -1,0 +1,39 @@
+### Produce to Kafka (via Rest API)
+
+POST http://localhost:8080/api/quotes
+Content-Type: application/json
+
+{
+  "symbol": "TSLA",
+  "exchange": "NASDAQ",
+  "tradeValue": "183.25",
+  "currency": "USD",
+  "description": "TSLA Stock"
+}
+
+### Stock NYSE
+
+POST http://localhost:8080/api/quotes
+Content-Type: application/json
+
+{
+  "symbol": "KO",
+  "exchange": "NYSE",
+  "tradeValue": "60.60",
+  "currency": "USD",
+  "description": "Coca Cola Stock"
+}
+
+### Stock AMS
+
+POST http://localhost:8080/api/quotes
+Content-Type: application/json
+
+{
+  "symbol": "INGA",
+  "exchange": "AMS",
+  "tradeValue": "11.10",
+  "currency": "EUR",
+  "description": "ING Stock"
+}
+
