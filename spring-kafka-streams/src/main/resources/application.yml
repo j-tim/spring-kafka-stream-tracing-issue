@@ -8,13 +8,6 @@ spring:
   kafka:
     bootstrap-servers: localhost:9092
 
-    producer:
-      # Important!
-      # In case you publish to a 'dead letter topic' your application becomes
-      # a producer as well! So you need to specify the producer properties!
-      key-serializer: org.apache.kafka.common.serialization.ByteArraySerializer
-      value-serializer: org.apache.kafka.common.serialization.ByteArraySerializer
-
     streams:
       application-id: ${spring.application.name}
       bootstrap-servers: ${spring.kafka.bootstrap-servers}
@@ -26,8 +19,6 @@ spring:
         default.value.serde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
         # LogAndFailExceptionHandler is the default!
         default.deserialization.exception.handler: org.apache.kafka.streams.errors.LogAndFailExceptionHandler
-#        default.deserialization.exception.handler: org.apache.kafka.streams.errors.LogAndContinueExceptionHandler
-#        default.deserialization.exception.handler: org.springframework.kafka.streams.RecoveringDeserializationExceptionHandler
 
 # Open up all Spring Boot Actuator endpoints
 management:
